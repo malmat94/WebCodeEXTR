@@ -1,29 +1,26 @@
-class WebAddressChanger:
+class WebAddressChanger():
     """Class that change website address for file name"""
 
     def __init__(self, raw_address):
-        self.ra_list = None
-        self.slash_indexes = None
         self.raw_address = raw_address
-        self.address = ""
         self.address_list = []
 
     def address_generator(self):
         """Function that generates changed website address"""
-        self.slash_indexes = self._slash_indexer()
-        self.ra_list = self._address_spreader()
+        slash_indexes = self._slash_indexer()
+        ra_list = self._address_spreader()
 
-        if self.slash_indexes[-1] + 1 < len(self.ra_list):
+        if slash_indexes[-1] + 1 < len(ra_list):
 
-            self.address_list = self.ra_list[self.slash_indexes[1] + 1: self.slash_indexes[2]] + self.ra_list[self.slash_indexes[-1]:]
-            self.address = str("".join(self.address_list))
-            self.address = self.address.replace("/", "_")
+            self.address_list = ra_list[slash_indexes[1] + 1: slash_indexes[2]] + ra_list[slash_indexes[-1]:]
+            address = str("".join(self.address_list))
+            address = address.replace("/", "_")
 
         else:
-            self.address_list = self.ra_list[self.slash_indexes[1] + 1: self.slash_indexes[2]] + self.ra_list[self.slash_indexes[-1] + 1:]
-            self.address = str("".join(self.address_list))
+            self.address_list = ra_list[slash_indexes[1] + 1: slash_indexes[2]] + ra_list[slash_indexes[-1] + 1:]
+            address = str("".join(self.address_list))
 
-        return self.address
+        return address
 
     def _address_spreader(self):
         """Function that spread website address string into a list"""
@@ -42,5 +39,12 @@ class WebAddressChanger:
                 slash_indexes.append(i)
 
         return slash_indexes
+
+
+address_for_fix = "https://stackoverflow.com/questions/23238352/create-object-from-class-in-separate-file"
+
+fix = WebAddressChanger(address_for_fix)
+fix.address_generator()
+
 
 
